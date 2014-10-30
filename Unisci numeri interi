@@ -1,0 +1,66 @@
+'''Presi due numeri, ho raddoppiato gli zeri contenuti in ogni numero. Poi, come separatore ho usato il codice 101.
+Il programma primo e il programma secondo riconoscono il codice 101 e separano, partendo dal numero unito, i due numeri originari.''' 
+
+#Questa funzione serve solo per implementare la funzione esponenziale
+def esponente10(x):
+    i=0
+    n=1
+    while i<x:
+        i=i+1
+        n=n*10
+    return n
+    
+#Dato un numero, questa funzione raddoppia gli zeri contenuti in esso (ad es. 500 diventa 50000, 2403 diventa 24003...)
+def raddoppia_zeri(x):
+    i=-1
+    t=0
+    while x!=0:
+        if x%10==0:
+            i=i+2
+        else:
+            i=i+1
+        t=t+(esponente10(i)*(x%10))
+        x=x//10
+    return t
+    
+#Conta il numero di cifre di un numero
+def numero_cifre(x):
+    i=0
+    while x!=0:
+        i=i+1
+        x=x//10
+    return i
+
+#La funzione unisci 
+def unisci(x1,x2):
+    return (((raddoppia_zeri(x1)*1000)+101)*esponente10(numero_cifre(raddoppia_zeri(x2))))+raddoppia_zeri(x2)
+
+#Per poter separare i numeri occorre eliminare tutti gli zeri aggiunti
+def dimezza_zeri(x):
+    i=-1
+    t=0
+    while x!=0:
+        if x%10!=0:
+            i=i+1
+            t=t+(esponente10(i)*(x%10))
+            x=x//10
+        else:
+            i=i+1
+            t=t+(esponente10(i)*(x%10))
+            x=x//100
+    return t
+
+#Calcola il primo numero originario
+def primo(x):
+    while x%1000!=101:
+        x=x//10
+    return dimezza_zeri(x//1000)
+
+#Calcola il secondo numero originario
+def secondo(x):
+    t=x
+    i=0
+    while x%1000!=101:
+        x=x//10
+        i=i+1
+    return dimezza_zeri(t%(esponente10(i)))
